@@ -51,11 +51,11 @@ const VisitRecordDialog: React.FC<VisitRecordDialogProps> = ({ open, onClose, re
           )}
         </DialogBody>
         <DialogFooter className="flex justify-end space-x-2 mt-2 pb-0">
-          <Button variant="outlined" color="gray" onClick={handleConfirm} className="border-gray-700 text-gray-700 p-2 px-4">
-            OK
-          </Button>
           <Button variant="outlined" color="gray" onClick={onClose} className="border-gray-500 text-gray-500 p-2">
             キャンセル
+          </Button>
+          <Button variant="outlined" color="gray" onClick={handleConfirm} className="border-gray-700 text-gray-700 p-2 px-4">
+            OK
           </Button>
         </DialogFooter>
       </div>

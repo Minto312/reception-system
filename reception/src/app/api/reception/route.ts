@@ -33,3 +33,17 @@ export async function PUT(request: Request) {
     return NextResponse.json({ error: 'Failed to update reception' }, { status: 500 });
   }
 }
+
+export async function POST(request: Request) {
+  try {
+    const body = await request.json();
+    const newReception = await prisma.reception.create({
+      data: body,
+    });
+
+    return NextResponse.json(newReception, { status: 201 });
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json({ error: 'Failed to create reception' }, { status: 500 });
+  }
+}
