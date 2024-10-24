@@ -4,7 +4,13 @@ out/
 node_modules/
 
 # Prisma
-prisma/migrations/
+node_modules/@prisma/client/
+.env
+**/prisma/*.db-journal
+**/prisma/migrations/
+.prisma-studio-history
+**/prisma/*.db
+**/prisma/*.db-journal
 
 # Jest
 coverage/
