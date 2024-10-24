@@ -13,7 +13,8 @@ export const useFilteredReceptions = () => {
   };
 
   const filteredReceptions = receptions?.filter((reception) =>
-    reception.companyName.toLowerCase().includes(searchTerm.toLowerCase())
+    reception.companyName.toLowerCase().includes(searchTerm.toLowerCase()) &&
+    reception.visitDateTime === null
   );
 
   return { filteredReceptions, isLoading, error, searchTerm, handleSearchChange };
