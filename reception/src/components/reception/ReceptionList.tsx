@@ -4,11 +4,14 @@ import React from 'react';
 import { useFilteredReceptions } from '@/hooks/useFilteredReceptions';
 import { Reception } from '@/types';
 import { Card, Typography, Input } from '@material-tailwind/react';
+import VisitRecordDialog from './VisitRecordDialog';
+import { useVisitRecordDialog } from '@/hooks/useVisitRecordDialog';
 
 const TABLE_HEAD = ['ID', 'Hash', 'Company Name', 'Assigned Office', 'CA Name', 'Customer Name', 'Guest Pass Number', 'Visit DateTime', 'Attended CA', 'Customer Email', 'Customer Address', 'Customer Phone Number', 'Office Sales List ID'];
 
 export const ReceptionList: React.FC = () => {
   const { filteredReceptions, isLoading, error, searchTerm, handleSearchChange } = useFilteredReceptions();
+  const { selectedReception, dialogOpen, handleOpenDialog, handleCloseDialog, handleConfirmDialog } = useVisitRecordDialog();
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error loading data</div>;
@@ -32,7 +35,7 @@ export const ReceptionList: React.FC = () => {
         </thead>
         <tbody>
           {filteredReceptions?.map((reception: Reception, index) => (
-            <tr key={reception.id} className={index % 2 === 0 ? 'even:bg-blue-gray-50/50' : ''}>
+            <tr key={reception.id} className={`cursor-pointer ${index % 2 === 0 ? 'even:bg-blue-gray-50/50' : ''}`} onClick={() => handleOpenDialog(reception)}>
               <td className="p-4">
                 <Typography variant="small" color="blue-gray" className="font-normal">
                   {reception.id}
@@ -102,6 +105,7 @@ export const ReceptionList: React.FC = () => {
           ))}
         </tbody>
       </table>
+      <VisitRecordDialog open={dialogOpen} onClose={handleCloseDialog} reception={selectedReception} onConfirm={handleConfirmDialog} />
     </Card>
   );
 };
