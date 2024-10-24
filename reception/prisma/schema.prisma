@@ -14,15 +14,15 @@ datasource db {
 model Reception {
   id                   String   @id @default(uuid())
   sequenceNumber       Int?
-  companyName          String?
+  companyName          String
   assignedOffice       String?
   caName               String?
-  customerName         String?
+  customerName         String
   guestPassNumber      String?
   visitDateTime        DateTime?
   attendedCA           String?
   customerEmail        String?
-  customerAddress      String?
+  customerAddress      String
   customerPhoneNumber  String?
   officeSalesListID    String?
 }

@@ -15,10 +15,27 @@ export const useVisitRecordDialog = () => {
     setSelectedReception(null);
   };
 
-  const handleConfirmDialog = (updatedReception: Reception) => {
-    // 更新されたReceptionを処理するロジックをここに追加
-    console.log('Updated Reception:', updatedReception);
-    handleCloseDialog();
+  const handleConfirmDialog = async (updatedReception: Reception) => {
+    try {
+      const response = await fetch('/api/reception', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedReception),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to update reception');
+      }
+
+      const result = await response.json();
+      console.log('Updated Reception:', result);
+    } catch (error) {
+      console.error('Error updating reception:', error);
+    } finally {
+      handleCloseDialog();
+    }
   };
 
   return {
