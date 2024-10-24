@@ -12,17 +12,17 @@ datasource db {
 
 
 model Reception {
-  id                   Int      @id @default(autoincrement())
-  hash                 String
-  companyName          String
-  assignedOffice       String
-  caName               String
-  customerName         String
-  guestPassNumber      String
-  visitDateTime        DateTime
-  attendedCA           String
-  customerEmail        String
-  customerAddress      String
-  customerPhoneNumber  String
-  officeSalesListID    Int
+  id                   String   @id @default(uuid())
+  sequenceNumber       Int?
+  companyName          String?
+  assignedOffice       String?
+  caName               String?
+  customerName         String?
+  guestPassNumber      String?
+  visitDateTime        DateTime?
+  attendedCA           String?
+  customerEmail        String?
+  customerAddress      String?
+  customerPhoneNumber  String?
+  officeSalesListID    String?
 }
