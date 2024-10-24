@@ -1,20 +1,23 @@
 'use client';
 
 import React from 'react';
-import { useReceptions } from '@/hooks/useReceptions';
+import { useFilteredReceptions } from '@/hooks/useFilteredReceptions';
 import { Reception } from '@/types';
-import { Card, Typography } from '@material-tailwind/react';
+import { Card, Typography, Input } from '@material-tailwind/react';
 
 const TABLE_HEAD = ['ID', 'Hash', 'Company Name', 'Assigned Office', 'CA Name', 'Customer Name', 'Guest Pass Number', 'Visit DateTime', 'Attended CA', 'Customer Email', 'Customer Address', 'Customer Phone Number', 'Office Sales List ID'];
 
 export const ReceptionList: React.FC = () => {
-  const { receptions, isLoading, error } = useReceptions();
+  const { filteredReceptions, isLoading, error, searchTerm, handleSearchChange } = useFilteredReceptions();
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error loading data</div>;
 
   return (
     <Card className="h-full w-full overflow-scroll mt-6">
+      <div className="p-4">
+        <Input type="text" placeholder="Search by Company Name" value={searchTerm} onChange={handleSearchChange} className="mb-4" />
+      </div>
       <table className="w-full min-w-max table-auto text-left">
         <thead>
           <tr>
@@ -28,7 +31,7 @@ export const ReceptionList: React.FC = () => {
           </tr>
         </thead>
         <tbody>
-          {receptions?.map((reception: Reception, index) => (
+          {filteredReceptions?.map((reception: Reception, index) => (
             <tr key={reception.id} className={index % 2 === 0 ? 'even:bg-blue-gray-50/50' : ''}>
               <td className="p-4">
                 <Typography variant="small" color="blue-gray" className="font-normal">
