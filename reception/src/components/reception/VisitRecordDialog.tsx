@@ -24,7 +24,7 @@ const VisitRecordDialog: React.FC<VisitRecordDialogProps> = ({ open, onClose, re
       const updatedReception: Reception = {
         ...reception,
         visitDateTime: new Date().toISOString(),
-        attendedCA: attended ? reception.caName : null,
+        attendedCA: attended ? '未確認' : null,
         guestPassNumber,
       };
       onConfirm(updatedReception);
