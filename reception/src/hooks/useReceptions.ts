@@ -16,5 +16,11 @@ export const useReceptions = () => {
     mutate();
   };
 
-  return { receptions, isLoading, error, refetch };
+  const enhancedReceptions = receptions?.map((reception) => ({
+    ...reception,
+    is_attended: reception.visitDateTime !== null && reception.attendedCA === '未確認',
+    is_responded: reception.visitDateTime !== null && reception.attendedCA !== '未確認' && reception.attendedCA !== null,
+  }));
+
+  return { receptions: enhancedReceptions, isLoading, error, refetch };
 };
