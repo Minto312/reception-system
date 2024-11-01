@@ -32,7 +32,7 @@ const NewVisitor: React.FC = () => {
       </Button>
       <NewVisitorForm
         open={newVisitorOpen}
-        onClose={handleCloseNewVisitorForm}
+        onCloseFunction={handleCloseNewVisitorForm}
         onConfirm={handleConfirmNewVisitor}
       />
     </div>

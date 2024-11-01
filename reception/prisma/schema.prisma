@@ -25,4 +25,6 @@ model Reception {
   customerAddress      String
   customerPhoneNumber  String?
   officeSalesListID    String?
+
+  @@unique([companyName, customerName], name: "customer_identifier")
 }

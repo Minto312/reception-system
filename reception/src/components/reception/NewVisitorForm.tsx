@@ -3,14 +3,23 @@ import { Dialog, DialogHeader, DialogBody, DialogFooter, Button, Input, Typograp
 
 interface NewVisitorFormProps {
   open: boolean;
-  onClose: () => void;
+  onCloseFunction: () => void;
   onConfirm: () => void;
 }
 
-const NewVisitorForm: React.FC<NewVisitorFormProps> = ({ open, onClose, onConfirm }) => {
+const NewVisitorForm: React.FC<NewVisitorFormProps> = ({ open, onCloseFunction, onConfirm }) => {
   const [companyName, setCompanyName] = useState('');
   const [customerName, setCustomerName] = useState('');
   const [customerAddress, setCustomerAddress] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const onClose = () => {
+    setCompanyName('');
+    setCustomerName('');
+    setCustomerAddress('');
+    setErrorMessage('');
+    onCloseFunction();
+  }
 
   const handleSubmit = async () => {
     const newVisitor = {
@@ -29,14 +38,16 @@ const NewVisitorForm: React.FC<NewVisitorFormProps> = ({ open, onClose, onConfir
         body: JSON.stringify(newVisitor),
       });
 
+      const result = await response.json();
       if (!response.ok) {
-        throw new Error('Failed to create new visitor');
+        throw new Error(result.message || 'Failed to create new visitor');
       }
 
       onConfirm();
       onClose();
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error creating new visitor:', error);
+      setErrorMessage(error.message);
     }
   };
 
@@ -45,6 +56,11 @@ const NewVisitorForm: React.FC<NewVisitorFormProps> = ({ open, onClose, onConfir
       <div className="bg-white p-6 rounded-lg shadow-lg w-96 max-w-full h-auto">
         <DialogHeader className="text-center text-lg font-semibold">新規来場者登録</DialogHeader>
         <DialogBody divider className="space-y-4">
+          {errorMessage && (
+            <Typography className="text-red-600 text-center">
+              {errorMessage}
+            </Typography>
+          )}
           <div className="space-y-4">
             <div>
               <label className="block text-gray-700">企業名</label>
