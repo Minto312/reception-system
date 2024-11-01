@@ -1,5 +1,6 @@
 'use client';
 
+import { useMemo } from 'react';
 import { Reception } from '@/types';
 import useSWR from 'swr';
 
@@ -16,11 +17,13 @@ export const useReceptions = () => {
     mutate();
   };
 
-  const enhancedReceptions = receptions?.map((reception) => ({
-    ...reception,
-    is_attended: reception.visitDateTime !== null && reception.attendedCA === '未確認',
-    is_responded: reception.visitDateTime !== null && reception.attendedCA !== '未確認' && reception.attendedCA !== null,
-  }));
+  const enhancedReceptions = useMemo(() => {
+    return receptions?.map((reception) => ({
+      ...reception,
+      is_attended: reception.visitDateTime !== null && reception.attendedCA === '未確認',
+      is_responded: reception.visitDateTime !== null && reception.attendedCA !== '未確認' && reception.attendedCA !== null,
+    }));
+  }, [receptions]);
 
   return { receptions: enhancedReceptions, isLoading, error, refetch };
 };
