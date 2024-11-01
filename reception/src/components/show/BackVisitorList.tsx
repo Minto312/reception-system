@@ -6,7 +6,7 @@ import { Reception } from '@/types';
 import { Card, Typography, Button, Dialog, DialogHeader, DialogBody, DialogFooter, Input } from '@material-tailwind/react';
 import { useAttendDialog } from '@/hooks/useAttendDialog';
 
-const TABLE_HEAD = ['企業名', 'お客様名', '営業所名（所在地）', '営業担当者名', '対応'];
+const TABLE_HEAD = ['企業名', 'お客様名', '営業所名（所在地）', '営業担当者名', 'ゲストパス', '対応'];
 
 const BackVisitorList: React.FC = () => {
   const { receptions, isLoading, error, refetch } = useBackReceptions();
@@ -58,6 +58,11 @@ const BackVisitorList: React.FC = () => {
               <td className="p-4">
                 <Typography variant="small" color="blue-gray" className="font-normal">
                   {reception.caName}
+                </Typography>
+              </td>
+              <td className="p-4">
+                <Typography variant="small" color="blue-gray" className="font-normal">
+                  {reception.guestPassNumber}
                 </Typography>
               </td>
               <td className="p-4">
