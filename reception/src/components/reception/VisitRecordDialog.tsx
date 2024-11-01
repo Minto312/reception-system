@@ -32,36 +32,27 @@ const VisitRecordDialog: React.FC<VisitRecordDialogProps> = ({ open, onClose, re
   };
 
   return (
-    <Dialog
-      open={open}
-      handler={onClose}
-      className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
-    >
+    <Dialog open={open} handler={onClose} className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
       <div className="bg-white p-6 rounded-lg shadow-lg w-96 max-w-full">
         <DialogHeader className="text-center text-lg font-semibold">来場記録</DialogHeader>
         <DialogBody divider className="space-y-4">
           {reception && (
             <div className="space-y-2">
-              <Typography variant="h6" className="text-gray-700">企業名: {reception.companyName}</Typography>
-              <Typography variant="h6" className="text-gray-700">お客様氏名: {reception.customerName}</Typography>
+              <Typography variant="h6" className="text-gray-700">
+                企業名: {reception.companyName}
+              </Typography>
+              <Typography variant="h6" className="text-gray-700">
+                お客様氏名: {reception.customerName}
+              </Typography>
               <label className="flex items-center mt-4 cursor-pointer">
-                <Checkbox
-                  label=""
-                  checked={attended}
-                  onChange={(e) => setAttended(e.target.checked)}
-                  className="text-gray-700"
-                  icon={<span className="w-4 h-4 border border-gray-700 bg-white" />}
-                  checkedicon={<span className="w-4 h-4 border border-gray-700 bg-gray-700" />}
-                />
-                <Typography variant="body1" className="ml-2 text-gray-700">同行していますか？</Typography>
+                <Checkbox label="" checked={attended} onChange={(e) => setAttended(e.target.checked)} className="text-gray-700" />
+                <Typography variant="body1" className="ml-2 text-gray-700">
+                  同行していますか？
+                </Typography>
               </label>
               <div className="mt-4">
                 <label className="block text-gray-700">ゲストパス</label>
-                <Input
-                  value={guestPassNumber}
-                  onChange={(e) => setGuestPassNumber(e.target.value)}
-                  className="mt-1 border-gray-500"
-                />
+                <Input value={guestPassNumber} onChange={(e) => setGuestPassNumber(e.target.value)} className="mt-1 border-black indent-3 h-10" />
               </div>
             </div>
           )}

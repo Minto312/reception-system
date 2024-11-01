@@ -77,7 +77,7 @@ const BackVisitorList: React.FC = () => {
 
       <Dialog open={attendDialogOpen} handler={handleCloseAttendDialog} className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
         <div className="bg-white p-6 rounded-lg shadow-lg w-96 max-w-full">
-          <DialogHeader className="text-center text-lg font-semibold">アテンド登録</DialogHeader>
+          <DialogHeader className="text-center text-lg font-semibold">対応者登録</DialogHeader>
           <DialogBody divider className="space-y-4">
             <div className="space-y-2">
               {selectedReception && (
@@ -89,7 +89,7 @@ const BackVisitorList: React.FC = () => {
                     お客様氏名: {selectedReception.customerName}
                   </Typography>
                   <label className="block text-gray-700">営業担当者名</label>
-                  <Input value={attendedCA} onChange={(e) => setAttendedCA(e.target.value)} className='border-black indent-3'/>
+                  <Input value={attendedCA} onChange={(e) => setAttendedCA(e.target.value)} className="border-black indent-3 h-10" />
                 </>
               )}
             </div>

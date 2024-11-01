@@ -59,39 +59,23 @@ const NewVisitorForm: React.FC<NewVisitorFormProps> = ({ open, onCloseFunction, 
       <div className="bg-white p-6 rounded-lg shadow-lg w-96 max-w-full h-auto">
         <DialogHeader className="text-center text-lg font-semibold">新規来場者登録</DialogHeader>
         <DialogBody divider className="space-y-4">
-          {errorMessage && (
-            <Typography className="text-red-600 text-center">
-              {errorMessage}
-            </Typography>
-          )}
+          {errorMessage && <Typography className="text-red-600 text-center">{errorMessage}</Typography>}
           <div className="space-y-4">
             <div>
               <label className="block text-gray-700">企業名</label>
-              <Input
-                value={companyName}
-                onChange={(e) => setCompanyName(e.target.value)}
-              />
+              <Input value={companyName} onChange={(e) => setCompanyName(e.target.value)} className="border-black indent-3 h-10" />
             </div>
             <div>
               <label className="block text-gray-700">お名前</label>
-              <Input
-                value={customerName}
-                onChange={(e) => setCustomerName(e.target.value)}
-              />
+              <Input value={customerName} onChange={(e) => setCustomerName(e.target.value)} className="border-black indent-3 h-10" />
             </div>
             <div>
               <label className="block text-gray-700">所在地のエリア</label>
-              <Input
-                value={customerAddress}
-                onChange={(e) => setCustomerAddress(e.target.value)}
-              />
+              <Input value={customerAddress} onChange={(e) => setCustomerAddress(e.target.value)} className="border-black indent-3 h-10" />
             </div>
             <div>
               <label className="block text-gray-700">ゲストパス</label>
-              <Input
-                value={guestPassNumber}
-                onChange={(e) => setGuestPassNumber(e.target.value)}
-              />
+              <Input value={guestPassNumber} onChange={(e) => setGuestPassNumber(e.target.value)} className="border-black indent-3 h-10" />
             </div>
           </div>
         </DialogBody>

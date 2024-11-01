@@ -8,20 +8,20 @@ import VisitRecordDialog from './VisitRecordDialog';
 import { useVisitRecordDialog } from '@/hooks/useVisitRecordDialog';
 
 const TABLE_HEAD = [
-  'Company Name', 
-  'Customer Name', 
-  'Guest Pass Number', 
-  'Visit DateTime', 
-  'is Attended',
-  'is Responded',
-  'Assigned Office', 
-  'CA Name', 
-  'Attended CA', 
-  'Customer Email', 
-  'Customer Address', 
-  'Customer Phone Number', 
-  'Office Sales List ID', 
-  'Sequence Number'
+  '企業名', 
+  'お客様名', 
+  'ゲストパス', 
+  '来場日時', 
+  'アテンド済',
+  '対応済',
+  '担当営業所', 
+  '担当CA名', 
+  '対応CA名', 
+  'お客様メールアドレス', 
+  'お客様住所', 
+  'お客様電話番号', 
+  'オフィス営業リストID', 
+  '通番'
 ];
 
 export const ReceptionList: React.FC = () => {
@@ -34,7 +34,7 @@ export const ReceptionList: React.FC = () => {
   return (
     <Card className="h-full w-full overflow-scroll mt-6">
       <div className="p-4">
-        <Input type="text" placeholder="Search by Company Name" value={searchTerm} onChange={handleSearchChange} className="mb-4" />
+        <Input type="text" placeholder="企業名で検索" value={searchTerm} onChange={handleSearchChange} className="mb-4 border-black indent-3 h-10" />
       </div>
       <table className="w-full min-w-max table-auto text-left">
         <thead>
