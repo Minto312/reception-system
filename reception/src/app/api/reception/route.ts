@@ -43,7 +43,12 @@ export async function POST(request: Request) {
 
     return NextResponse.json(newReception, { status: 201 });
   } catch (error) {
+
+    if (error.code === 'P2002') {
+      return NextResponse.json({ message: 'すでに登録されています', error: 'Unique constraint failed' }, { status: 409 });
+    }
+
     console.error(error);
-    return NextResponse.json({ error: 'Failed to create reception' }, { status: 500 });
+    return NextResponse.json({ message: '登録に失敗しました', error: 'Failed to create reception' }, { status: 500 });
   }
 }
