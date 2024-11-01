@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Dialog, DialogHeader, DialogBody, DialogFooter, Button, Checkbox, Typography } from '@material-tailwind/react';
+import React, { useState, useEffect } from 'react';
+import { Dialog, DialogHeader, DialogBody, DialogFooter, Button, Checkbox, Typography, Input } from '@material-tailwind/react';
 import { Reception } from '@/types';
 
 interface VisitRecordDialogProps {
@@ -11,6 +11,13 @@ interface VisitRecordDialogProps {
 
 const VisitRecordDialog: React.FC<VisitRecordDialogProps> = ({ open, onClose, reception, onConfirm }) => {
   const [attended, setAttended] = useState(false);
+  const [guestPassNumber, setGuestPassNumber] = useState('');
+
+  useEffect(() => {
+    if (reception) {
+      setGuestPassNumber(reception.guestPassNumber || '');
+    }
+  }, [reception]);
 
   const handleConfirm = () => {
     if (reception) {
@@ -18,6 +25,7 @@ const VisitRecordDialog: React.FC<VisitRecordDialogProps> = ({ open, onClose, re
         ...reception,
         visitDateTime: new Date().toISOString(),
         attendedCA: attended ? reception.caName : null,
+        guestPassNumber,
       };
       onConfirm(updatedReception);
     }
@@ -47,6 +55,14 @@ const VisitRecordDialog: React.FC<VisitRecordDialogProps> = ({ open, onClose, re
                 />
                 <Typography variant="body1" className="ml-2 text-gray-700">同行していますか？</Typography>
               </label>
+              <div className="mt-4">
+                <label className="block text-gray-700">ゲストパス</label>
+                <Input
+                  value={guestPassNumber}
+                  onChange={(e) => setGuestPassNumber(e.target.value)}
+                  className="mt-1 border-gray-500"
+                />
+              </div>
             </div>
           )}
         </DialogBody>
