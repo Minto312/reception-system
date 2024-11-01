@@ -37,13 +37,24 @@ export async function PUT(request: Request) {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
+
+    const maxSequenceNumber = await prisma.reception.aggregate({
+      _max: {
+        sequenceNumber: true,
+      },
+    });
+
+    const newSequenceNumber = (maxSequenceNumber._max.sequenceNumber || 0) + 1;
+
     const newReception = await prisma.reception.create({
-      data: body,
+      data: {
+        ...body,
+        sequenceNumber: newSequenceNumber,
+      },
     });
 
     return NextResponse.json(newReception, { status: 201 });
-  } catch (error) {
-
+  } catch (error: any) {
     if (error.code === 'P2002') {
       return NextResponse.json({ message: 'すでに登録されています', error: 'Unique constraint failed' }, { status: 409 });
     }
