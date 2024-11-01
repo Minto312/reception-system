@@ -12,6 +12,8 @@ const TABLE_HEAD = [
   'Customer Name', 
   'Guest Pass Number', 
   'Visit DateTime', 
+  'is Attended',
+  'is Responded',
   'Assigned Office', 
   'CA Name', 
   'Attended CA', 
@@ -67,6 +69,16 @@ export const ReceptionList: React.FC = () => {
               <td className="p-4">
                 <Typography variant="small" color="blue-gray" className="font-normal">
                   {reception.visitDateTime ? new Date(reception.visitDateTime).toLocaleString() : ''}
+                </Typography>
+              </td>
+              <td className="p-4">
+                <Typography variant="small" color="blue-gray" className="font-normal text-center text-md">
+                  {reception.visitDateTime !== null && reception.attendedCA === '未確認' ? '✅' : ''}
+                </Typography>
+              </td>
+              <td className="p-4">
+                <Typography variant="small" color="blue-gray" className="font-normal text-center text-md">
+                  {reception.visitDateTime !== null && reception.attendedCA !== '未確認' && reception.attendedCA !== null ? '✅' : ''}
                 </Typography>
               </td>
               <td className="p-4">
