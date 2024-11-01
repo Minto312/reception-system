@@ -11,12 +11,14 @@ const NewVisitorForm: React.FC<NewVisitorFormProps> = ({ open, onCloseFunction, 
   const [companyName, setCompanyName] = useState('');
   const [customerName, setCustomerName] = useState('');
   const [customerAddress, setCustomerAddress] = useState('');
+  const [guestPassNumber, setGuestPassNumber] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
   const onClose = () => {
     setCompanyName('');
     setCustomerName('');
     setCustomerAddress('');
+    setGuestPassNumber('');
     setErrorMessage('');
     onCloseFunction();
   }
@@ -26,6 +28,7 @@ const NewVisitorForm: React.FC<NewVisitorFormProps> = ({ open, onCloseFunction, 
       companyName,
       customerName,
       customerAddress,
+      guestPassNumber,
       visitDateTime: new Date().toISOString(),
     };
 
@@ -81,6 +84,13 @@ const NewVisitorForm: React.FC<NewVisitorFormProps> = ({ open, onCloseFunction, 
               <Input
                 value={customerAddress}
                 onChange={(e) => setCustomerAddress(e.target.value)}
+              />
+            </div>
+            <div>
+              <label className="block text-gray-700">ゲストパス</label>
+              <Input
+                value={guestPassNumber}
+                onChange={(e) => setGuestPassNumber(e.target.value)}
               />
             </div>
           </div>
