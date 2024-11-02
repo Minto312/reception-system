@@ -1,0 +1,30 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+
+model Reception {
+  id                   String   @id @default(uuid())
+  sequenceNumber       Int?
+  companyName          String
+  assignedOffice       String?
+  caName               String?
+  customerName         String
+  guestPassNumber      String?
+  visitDateTime        DateTime?
+  attendedCA           String?
+  customerEmail        String?
+  customerAddress      String
+  customerPhoneNumber  String?
+  officeSalesListID    String?
+
+  @@unique([companyName, customerName], name: "customer_identifier")
+}

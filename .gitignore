@@ -1,3 +1,20 @@
+# Next.js
+.next/
+out/
+node_modules/
+
+# Prisma
+node_modules/@prisma/client/
+.env
+**/prisma/*.db-journal
+**/prisma/migrations/
+.prisma-studio-history
+**/prisma/*.db
+**/prisma/*.db-journal
+
+# Jest
+coverage/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

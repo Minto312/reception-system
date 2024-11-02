@@ -1,0 +1,42 @@
+# Stage 1: Build Stage
+FROM node:20 AS builder
+
+# Set working directory
+WORKDIR /app
+
+# Copy package.json and package-lock.json
+COPY package*.json ./
+
+# Install dependencies
+RUN npm install
+
+# Copy all files
+COPY . .
+
+# Build the Next.js application
+RUN npm run build
+
+# Stage 2: Production Stage
+FROM node:20 AS production
+
+# Set working directory
+WORKDIR /app
+
+# Copy built application from builder
+COPY --from=builder /app/.next /app/.next
+COPY --from=builder /app/public /app/public
+COPY --from=builder /app/package*.json /app/
+# COPY --from=builder /app/next.config.js /app/
+
+# Install production dependencies
+RUN npm install --only=production
+
+# Set environment variables
+ENV NODE_ENV=production
+ENV PORT=3000
+
+# Expose the port the app runs on
+EXPOSE 3000
+
+# Start the application
+CMD ["npm", "start"]
