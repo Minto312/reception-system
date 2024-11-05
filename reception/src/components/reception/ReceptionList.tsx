@@ -50,7 +50,7 @@ export const ReceptionList: React.FC = () => {
         </thead>
         <tbody>
           {filteredReceptions?.map((reception: Reception, index) => (
-            <tr key={reception.id} className={`cursor-pointer ${index % 2 === 0 ? 'even:bg-blue-gray-50/50' : ''}`} onClick={() => handleOpenDialog(reception)}>
+            <tr key={reception.id} className={`cursor-pointer even:bg-gray-100 border-b hover:bg-gray-200`} onClick={() => handleOpenDialog(reception)}>
               <td className="p-4">
                 <Typography variant="small" color="blue-gray" className="font-normal">
                   {reception.companyName}
