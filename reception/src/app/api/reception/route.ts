@@ -17,6 +17,8 @@ export async function PUT(request: Request) {
   try {
     const body = await request.json();
     const { id, ...updateData } = body;
+    delete updateData.is_attended;
+    delete updateData.is_responded;
 
     if (!id) {
       return NextResponse.json({ error: 'ID is required' }, { status: 400 });
