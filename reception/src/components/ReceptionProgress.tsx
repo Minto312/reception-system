@@ -11,10 +11,10 @@ const ReceptionProgress: React.FC = () => {
     <Card className="max-w-sm shadow-md w-fit">
       <CardBody>
         <div className="text-center flex gap-6">
-          <Typography variant="h2" color="black">
+          <Typography className='font-bold'>
             {`${respondedReceptionCount} / ${totalReceptionCount}`}
           </Typography>
-          <Typography variant="h2" color="black">
+          <Typography className='font-bold'>
             {`${respondedRate.toFixed(2)}%`}
           </Typography>
         </div>

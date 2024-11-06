@@ -1,15 +1,15 @@
-import NewVisitor from "@/components/reception/NewVistor";
-import { ReceptionList } from "@/components/reception/ReceptionList";
-import ReceptionProgress from "@/components/ReceptionProgress";
-
-
+import NewVisitor from '@/components/reception/NewVistor';
+import { ReceptionList } from '@/components/reception/ReceptionList';
+import ReceptionProgress from '@/components/ReceptionProgress';
 
 export default function Reception() {
-    return (
-      <>
+  return (
+    <>
+      <div className="flex items-center gap-4">
         <ReceptionProgress />
         <NewVisitor />
-        <ReceptionList />
-      </>
-    );
-};
+      </div>
+      <ReceptionList />
+    </>
+  );
+}
