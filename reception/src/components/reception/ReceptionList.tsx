@@ -17,8 +17,8 @@ const TABLE_HEAD = [
   '担当営業所', 
   '担当CA名', 
   '対応CA名', 
-  'お客様メールアドレス', 
   'お客様住所', 
+  'お客様メールアドレス', 
   'お客様電話番号', 
   'オフィス営業リストID', 
   '通番'
@@ -98,12 +98,12 @@ export const ReceptionList: React.FC = () => {
               </td>
               <td className="p-4">
                 <Typography variant="small" color="blue-gray" className="font-normal">
-                  {reception.customerEmail}
+                  {reception.customerAddress}
                 </Typography>
               </td>
               <td className="p-4">
                 <Typography variant="small" color="blue-gray" className="font-normal">
-                  {reception.customerAddress}
+                  {reception.customerEmail}
                 </Typography>
               </td>
               <td className="p-4">
