@@ -6,25 +6,17 @@ import { Reception } from '@/types';
 import { Card, Typography, Button, Dialog, DialogHeader, DialogBody, DialogFooter, Input } from '@material-tailwind/react';
 import { useAttendDialog } from '@/hooks/useAttendDialog';
 
-const TABLE_HEAD = ['企業名', 'お客様名', '営業所名（所在地）', '営業担当者名', 'ゲストパス'];
+const TABLE_HEAD = ['来場時刻', '企業名', 'お客様名', '営業所名（所在地）', '営業担当者名', 'ゲストパス'];
 
 const BackVisitorList: React.FC = () => {
   const { receptions, isLoading, error, refetch } = useBackReceptions();
-  const {
-    selectedReception,
-    attendDialogOpen,
-    attendedCA,
-    setAttendedCA,
-    handleOpenAttendDialog,
-    handleCloseAttendDialog,
-    handleAttend,
-  } = useAttendDialog();
+  const { selectedReception, attendDialogOpen, attendedCA, setAttendedCA, handleOpenAttendDialog, handleCloseAttendDialog, handleAttend } = useAttendDialog();
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error loading data</div>;
 
   return (
-    <Card className="h-full w-full overflow-scroll mt-6">
+    <Card className="h-full w-full overflow-scroll">
       <table className="w-full min-w-max table-auto text-left">
         <thead>
           <tr>
@@ -40,6 +32,11 @@ const BackVisitorList: React.FC = () => {
         <tbody>
           {receptions?.map((reception: Reception, index) => (
             <tr key={reception.id} onClick={() => handleOpenAttendDialog(reception)} className={`cursor-pointer even:bg-gray-100 border-b hover:bg-gray-200`}>
+              <td className="p-5">
+                <Typography variant="small" color="blue-gray" className="font-normal text-lg">
+                  {reception.visitDateTime ? new Date(reception.visitDateTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : ''}
+                </Typography>
+              </td>
               <td className="p-5">
                 <Typography variant="small" color="blue-gray" className="font-normal text-lg">
                   {reception.companyName}
