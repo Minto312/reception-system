@@ -86,7 +86,7 @@ export const EditReceptionDialog: React.FC<EditReceptionDialogProps> = ({ open, 
             </div>
             <div>
               <label className="text-gray-700">通番</label>
-              <Input name="sequenceNumber" value={formData.sequenceNumber || ''} onChange={handleChange} className="indent-4" />
+              <Input name="sequenceNumber" disabled value={formData.sequenceNumber || ''} onChange={handleChange} className="indent-4" />
             </div>
           </div>
         </DialogBody>
