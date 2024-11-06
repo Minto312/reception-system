@@ -40,7 +40,7 @@ export const ReceptionList: React.FC = () => {
         <thead>
           <tr>
             {TABLE_HEAD.map((head) => (
-              <th key={head} className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
+              <th key={head} className="border-b border-blue-gray-100 bg-blue-gray-50 p-4 bg-blue-50">
                 <Typography variant="small" color="blue-gray" className="font-normal leading-none opacity-70">
                   {head}
                 </Typography>
