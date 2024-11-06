@@ -18,6 +18,7 @@ export async function POST(request: Request) {
     columns: true,
     skip_empty_lines: true,
   });
+  console.dir(records);
 
   const receptions = records.map((record: any) => ({
     sequenceNumber: parseInt(record['通番']),
