@@ -6,7 +6,7 @@ import { Reception } from '@/types';
 import { Card, Typography, Button, Dialog, DialogHeader, DialogBody, DialogFooter, Input } from '@material-tailwind/react';
 import { useAttendDialog } from '@/hooks/useAttendDialog';
 
-const TABLE_HEAD = ['来場時刻', '企業名', 'お客様名', '営業所名（所在地）', '営業担当者名', 'ゲストパス'];
+const TABLE_HEAD = ['来場時刻', '営業所名（所在地）', '営業担当者名', '企業名', 'お客様名', 'ゲストパス'];
 
 const BackVisitorList: React.FC = () => {
   const { receptions, isLoading, error, refetch } = useBackReceptions();
@@ -39,22 +39,22 @@ const BackVisitorList: React.FC = () => {
               </td>
               <td className="p-5">
                 <Typography variant="small" color="blue-gray" className="font-normal text-lg">
-                  {reception.companyName}
-                </Typography>
-              </td>
-              <td className="p-5">
-                <Typography variant="small" color="blue-gray" className="font-normal text-lg">
-                  {reception.customerName}
-                </Typography>
-              </td>
-              <td className="p-5">
-                <Typography variant="small" color="blue-gray" className="font-normal text-lg">
                   {reception.assignedOffice || reception.customerAddress}
                 </Typography>
               </td>
               <td className="p-5">
                 <Typography variant="small" color="blue-gray" className="font-normal text-lg">
                   {reception.caName}
+                </Typography>
+              </td>
+              <td className="p-5">
+                <Typography variant="small" color="blue-gray" className="font-normal text-lg">
+                  {reception.companyName}
+                </Typography>
+              </td>
+              <td className="p-5">
+                <Typography variant="small" color="blue-gray" className="font-normal text-lg">
+                  {reception.customerName}
                 </Typography>
               </td>
               <td className="p-5">
