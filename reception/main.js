@@ -1,12 +1,31 @@
 const { app, BrowserWindow } = require('electron');
-const path = require('path');
+const next = require('next');
 
-function createWindow() {
+const dev = process.env.NODE_ENV !== 'production';
+const nextApp = next({ dev });
+const handle = nextApp.getRequestHandler();
+
+async function createWindow() {
+  await nextApp.prepare();
+
+  const express = require('express');
+  const server = express();
+
+  server.all('*', (req, res) => {
+    return handle(req, res);
+  });
+
+  server.listen(3000, (err) => {
+    if (err) throw err;
+    console.log('Next.js server running on http://localhost:3000');
+  });
+
   const mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js'),
+      nodeIntegration: true,
+      contextIsolation: false,
     },
   });
 
