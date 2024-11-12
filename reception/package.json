@@ -47,12 +47,23 @@
   "main": "main.js",
   "build": {
     "appId": "com.example.reception",
+    "productName": "Reception",
+    "files": [
+      "prisma/**/*",
+      "public/**/*",
+      "src/**/*",
+      "next.config.js",
+      "package.json",
+      "main.js",
+      "tsconfig.json",
+      "electron/**/*"
+    ],
     "asar": false,
     "mac": {
       "category": "your.app.category.type"
     },
     "win": {
-      "target": "dir"
+      "target": "nsis"
     },
     "linux": {
       "target": "AppImage"

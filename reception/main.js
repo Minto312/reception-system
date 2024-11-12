@@ -1,9 +1,9 @@
-import { app, BrowserWindow } from 'electron';
-import next from 'next';
-import { exec } from 'child_process';
-import fs from 'fs';
-import express from 'express';
-import path from 'path';
+const { app, BrowserWindow } = require('electron');
+const next = require('next');
+const { exec } = require('child_process');
+const fs = require('fs');
+const express = require('express');
+const path = require('path');
 
 app.commandLine.appendSwitch('disable-gpu-sandbox');
 
@@ -55,6 +55,7 @@ async function createWindow() {
       const mainWindow = new BrowserWindow({
         width: 800,
         height: 600,
+        show: true,
         webPreferences: {
           nodeIntegration: true,
           contextIsolation: false,
@@ -62,6 +63,21 @@ async function createWindow() {
       });
 
       mainWindow.webContents.openDevTools();
+
+      mainWindow.once('ready-to-show', () => {
+        mainWindow.show();
+      });
+      mainWindow.loadURL('http://localhost:80');
+      logToFile('Electron window created and loaded URL http://localhost:80');
+
+      // エラーハンドリング
+      mainWindow.webContents.on('did-fail-load', (event, errorCode, errorDescription) => {
+        logToFile(`Failed to load URL: ${errorDescription} (Error code: ${errorCode})`);
+      });
+
+      mainWindow.on('closed', () => {
+        logToFile('Electron window closed');
+      });
       mainWindow.loadURL('http://localhost:80');
       logToFile('Electron window created and loaded URL http://localhost:80');
     });
