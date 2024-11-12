@@ -1,11 +1,28 @@
 const { app, BrowserWindow } = require('electron');
 const next = require('next');
+const { exec } = require('child_process'); 
 
 const dev = process.env.NODE_ENV !== 'production';
 const nextApp = next({ dev });
 const handle = nextApp.getRequestHandler();
 
 async function createWindow() {
+  exec('npx prisma generate', (err, stdout, stderr) => {
+    if (err) {
+      console.error(`Error running prisma generate: ${stderr}`);
+      return;
+    }
+    console.log(`Prisma generate output: ${stdout}`);
+  });
+
+  exec('npx prisma db push', (err, stdout, stderr) => {
+    if (err) {
+      console.error(`Error running prisma db push: ${stderr}`);
+      return;
+    }
+    console.log(`Prisma db push output: ${stdout}`);
+  });
+
   await nextApp.prepare(); // Next.jsの準備が完了するのを待つ
 
   const express = require('express');
