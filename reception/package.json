@@ -6,6 +6,7 @@
     "dev": "yarn next dev",
     "dev-electron": "electron .",
     "build": "next build",
+    "build-electron": "npx prisma generate && npx prisma db push && next build && electron-builder --win",
     "start": "next start",
     "lint": "next lint",
     "electron-pack": "electron-builder --win"
