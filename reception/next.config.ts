@@ -9,8 +9,8 @@ const nextConfig: NextConfig = {
 };
 
 module.exports = {
-  basePath: '/assets',
-  assetPrefix: 'http://localhost:3000',
+  basePath: '',
+  assetPrefix: 'http://localhost:3001',
   typescript: {
     // !! WARN !!
     // Dangerously allow production builds to successfully complete even if
