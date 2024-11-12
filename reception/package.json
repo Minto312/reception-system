@@ -8,7 +8,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "electron-pack": "electron-builder"
+    "electron-pack": "electron-builder --win"
   },
   "dependencies": {
     "@heroicons/react": "^2.1.5",
