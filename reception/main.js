@@ -1,92 +1,101 @@
-const { app, BrowserWindow } = require('electron');
-app.commandLine.appendSwitch('disable-gpu-sandbox');
+import { app, BrowserWindow } from 'electron';
+import next from 'next';
+import { exec } from 'child_process';
+import fs from 'fs';
+import express from 'express';
+import path from 'path';
 
-const next = require('next');
-const { exec } = require('child_process');
-const fs = require('fs');
+app.commandLine.appendSwitch('disable-gpu-sandbox');
 
 const dev = process.env.NODE_ENV !== 'production';
 const nextApp = next({ dev });
 const handle = nextApp.getRequestHandler();
 
+const logFilePath = path.join(app.getPath('userData'), 'app.log');
+
 function logToFile(message) {
-  console.log(`${new Date().toISOString()} - ${message}`);
-  fs.appendFileSync('C:/Users/karinto/Music/reception-system/reception/dist/win-unpacked', `${new Date().toISOString()} - ${message}\n`);
+  const logMessage = `${new Date().toISOString()} - ${message}`;
+  console.log(logMessage);
+  try {
+    fs.appendFileSync(logFilePath, `${logMessage}\n`);
+  } catch (error) {
+    console.error('Failed to write to log file:', error);
+  }
 }
 
 async function createWindow() {
-  logToFile('Starting prisma generate');
-  exec('npx prisma generate', (err, stdout, stderr) => {
-    if (err) {
-      logToFile(`Error running prisma generate: ${stderr}`);
-      console.error(`Error running prisma generate: ${stderr}`);
-      return;
-    }
-    logToFile(`Prisma generate output: ${stdout}`);
-    console.log(`Prisma generate output: ${stdout}`);
-  });
+  try {
+    logToFile('Starting prisma generate');
+    await execPromise('npx prisma generate');
+    logToFile('Prisma generate completed');
 
-  logToFile('Starting prisma db push');
-  exec('npx prisma db push', (err, stdout, stderr) => {
-    if (err) {
-      logToFile(`Error running prisma db push: ${stderr}`);
-      console.error(`Error running prisma db push: ${stderr}`);
-      return;
-    }
-    logToFile(`Prisma db push output: ${stdout}`);
-    console.log(`Prisma db push output: ${stdout}`);
-  });
+    logToFile('Starting prisma db push');
+    await execPromise('npx prisma db push');
+    logToFile('Prisma db push completed');
 
-  logToFile('Preparing Next.js');
-  await nextApp.prepare(); // Next.jsの準備が完了するのを待つ
-  logToFile('Next.js prepared');
+    logToFile('Preparing Next.js');
+    await nextApp.prepare();
+    logToFile('Next.js prepared');
 
-  const express = require('express');
-  const server = express();
+    const server = express();
 
-  logToFile('Setting up Next.js request handler');
-  // Next.jsのリクエストハンドラーを使用
-  server.all('*', (req, res) => {
-    return handle(req, res);
-  });
+    logToFile('Setting up Next.js request handler');
+    server.all('*', (req, res) => handle(req, res));
 
-  logToFile('Starting server on port 80');
-  // サーバーをリッスン
-  server.listen(80, (err) => {
-    if (err) {
-      logToFile(`Error starting server: ${err}`);
-      throw err;
-    }
-    logToFile('Next.js server running on http://localhost:80');
-    console.log('Next.js server running on http://localhost:80');
+    logToFile('Starting server on port 80');
+    server.listen(80, (err) => {
+      if (err) {
+        logToFile(`Error starting server: ${err}`);
+        throw err;
+      }
+      logToFile('Next.js server running on http://localhost:80');
+      console.log('Next.js server running on http://localhost:80');
 
-    logToFile('Creating Electron window');
-    // Next.jsサーバーが立ち上がった後にElectronウィンドウを作成
-    const mainWindow = new BrowserWindow({
-      width: 800,
-      height: 600,
-      webPreferences: {
-        nodeIntegration: true,
-        contextIsolation: false,
-      },
+      logToFile('Creating Electron window');
+      const mainWindow = new BrowserWindow({
+        width: 800,
+        height: 600,
+        webPreferences: {
+          nodeIntegration: true,
+          contextIsolation: false,
+        },
+      });
+
+      mainWindow.webContents.openDevTools();
+      mainWindow.loadURL('http://localhost:80');
+      logToFile('Electron window created and loaded URL http://localhost:80');
     });
+  } catch (error) {
+    logToFile(`Error during createWindow: ${error.message}`);
+  }
+}
 
-    mainWindow.webContents.openDevTools();
-    mainWindow.loadURL('http://localhost:80');
-    logToFile('Electron window created and loaded URL http://localhost:80');
+function execPromise(command) {
+  return new Promise((resolve, reject) => {
+    exec(command, (err, stdout, stderr) => {
+      if (err) {
+        logToFile(`Error executing command: ${command}\n${stderr}`);
+        reject(err);
+      } else {
+        logToFile(`Command output: ${stdout}`);
+        resolve(stdout);
+      }
+    });
   });
 }
 
-app.on('ready-to-show', () => {
-  logToFile('App ready-to-show');
+app.on('ready', () => {
+  logToFile('App ready');
   createWindow();
 });
+
 app.on('window-all-closed', () => {
   logToFile('All windows closed');
   if (process.platform !== 'darwin') {
     app.quit();
   }
 });
+
 app.on('activate', () => {
   logToFile('App activated');
   if (BrowserWindow.getAllWindows().length === 0) {
