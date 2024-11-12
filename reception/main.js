@@ -1,4 +1,6 @@
 const { app, BrowserWindow } = require('electron');
+app.commandLine.appendSwitch('disable-gpu-sandbox');
+
 const next = require('next');
 const { exec } = require('child_process');
 const fs = require('fs');
@@ -8,6 +10,7 @@ const nextApp = next({ dev });
 const handle = nextApp.getRequestHandler();
 
 function logToFile(message) {
+  console.log(`${new Date().toISOString()} - ${message}`);
   fs.appendFileSync('C:/Users/karinto/Music/reception-system/reception/dist/win-unpacked', `${new Date().toISOString()} - ${message}\n`);
 }
 
