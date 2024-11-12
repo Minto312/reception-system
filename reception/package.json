@@ -3,16 +3,19 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "HOST=0.0.0.0 next dev --turbopack",
+    "dev": "yarn next dev",
+    "dev-electron": "electron .",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "electron-pack": "electron-builder --win"
   },
   "dependencies": {
     "@heroicons/react": "^2.1.5",
     "@material-tailwind/react": "^2.1.10",
     "@prisma/client": "5.21.1",
     "@types/jest": "^29.5.14",
+    "concurrently": "^8.0.1",
     "csv-parse": "^5.5.6",
     "csv-stringify": "^6.5.1",
     "heroicons": "^2.1.5",
@@ -23,7 +26,8 @@
     "react-dom": "^18",
     "sqlite3": "^5.1.7",
     "swr": "^2.2.5",
-    "ts-jest": "^29.2.5"
+    "ts-jest": "^29.2.5",
+    "wait-on": "^7.0.1"
   },
   "devDependencies": {
     "@types/node": "^20",
@@ -33,6 +37,21 @@
     "eslint-config-next": "15.0.1",
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
-    "typescript": "^5"
+    "typescript": "^5",
+    "electron": "^26.1.0",
+    "electron-builder": "^25.1.8"
+  },
+  "main": "main.js",
+  "build": {
+    "appId": "com.example.reception",
+    "mac": {
+      "category": "your.app.category.type"
+    },
+    "win": {
+      "target": "nsis"
+    },
+    "linux": {
+      "target": "AppImage"
+    }
   }
 }

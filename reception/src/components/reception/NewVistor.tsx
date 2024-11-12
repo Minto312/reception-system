@@ -21,14 +21,14 @@ const NewVisitor: React.FC = () => {
   };
 
   return (
-    <div className='m-8 mb-4'>
+    <div className=''>
       <Button
         variant="gradient"
         color="blue"
         onClick={handleOpenNewVisitorForm}
-        className="text-white bg-blue-500 hover:bg-blue-700 p-4"
+        className="text-white bg-blue-500 hover:bg-blue-700 w-10 h-10 text-center leading-10 rounded-full text-3xl"
       >
-        新規来場者登録
+        +
       </Button>
       <NewVisitorForm
         open={newVisitorOpen}

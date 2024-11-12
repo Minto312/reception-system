@@ -18,6 +18,7 @@ export async function POST(request: Request) {
     columns: true,
     skip_empty_lines: true,
   });
+  console.dir(records);
 
   const receptions = records.map((record: any) => ({
     sequenceNumber: parseInt(record['通番']),
@@ -31,15 +32,22 @@ export async function POST(request: Request) {
     officeSalesListID: record['オフィス営業リストID'],
   }));
 
-  try {
-    await prisma.reception.createMany({
-      data: receptions,
-    });
-    return NextResponse.json({ message: 'Receptions created successfully' });
-  } catch (error) {
-    console.error(error);
-    return NextResponse.json({ error: 'Failed to create receptions' }, { status: 500 });
+  for (const reception of receptions) {
+    try {
+      await prisma.reception.create({
+        data: reception,
+      });
+    } catch (error) {
+      if ((error as any).code === 'P2002') {
+        console.log(`Skipping duplicate record for sequenceNumber: ${reception.sequenceNumber}`);
+      } else {
+        console.error(error);
+        return NextResponse.json({ message: 'Failed to create receptions', 'ok': false }, { status: 500 });
+      }
+    }
   }
+
+  return NextResponse.json({ message: 'Receptions created successfully', 'ok': true });
 }
 
 export async function GET() {

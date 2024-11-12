@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+const path = require('path');
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
@@ -8,6 +9,8 @@ const nextConfig: NextConfig = {
 };
 
 module.exports = {
+  basePath: '/assets',
+  assetPrefix: 'http://localhost:3000',
   typescript: {
     // !! WARN !!
     // Dangerously allow production builds to successfully complete even if
