@@ -34,9 +34,9 @@ async function createWindow() {
   });
 
   // サーバーをリッスン
-  server.listen(3001, (err) => {
+  server.listen(80, (err) => {
     if (err) throw err;
-    console.log('Next.js server running on http://localhost:3001');
+    console.log('Next.js server running on http://localhost:80');
 
     // Next.jsサーバーが立ち上がった後にElectronウィンドウを作成
     const mainWindow = new BrowserWindow({
@@ -48,7 +48,7 @@ async function createWindow() {
       },
     });
 
-    mainWindow.loadURL('http://localhost:3001');
+    mainWindow.loadURL('http://localhost:80');
   });
 }
 
