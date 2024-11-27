@@ -6,30 +6,22 @@ import { Reception } from '@/types';
 import { Card, Typography, Button, Dialog, DialogHeader, DialogBody, DialogFooter, Input } from '@material-tailwind/react';
 import { useAttendDialog } from '@/hooks/useAttendDialog';
 
-const TABLE_HEAD = ['企業名', 'お客様名', '営業所名（所在地）', '営業担当者名', 'ゲストパス', '対応'];
+const TABLE_HEAD = ['来場時刻', '営業所名（所在地）', '営業担当者名', '企業名', 'お客様名', 'ゲストパス'];
 
 const BackVisitorList: React.FC = () => {
   const { receptions, isLoading, error, refetch } = useBackReceptions();
-  const {
-    selectedReception,
-    attendDialogOpen,
-    attendedCA,
-    setAttendedCA,
-    handleOpenAttendDialog,
-    handleCloseAttendDialog,
-    handleAttend,
-  } = useAttendDialog();
+  const { selectedReception, attendDialogOpen, attendedCA, setAttendedCA, handleOpenAttendDialog, handleCloseAttendDialog, handleAttend } = useAttendDialog();
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error loading data</div>;
 
   return (
-    <Card className="h-full w-full overflow-scroll mt-6">
+    <Card className="h-full w-full overflow-scroll">
       <table className="w-full min-w-max table-auto text-left">
         <thead>
           <tr>
             {TABLE_HEAD.map((head) => (
-              <th key={head} className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
+              <th key={head} className="border-b border-blue-gray-100 bg-blue-gray-50 p-5 bg-red-50">
                 <Typography variant="small" color="blue-gray" className="font-normal leading-none opacity-70">
                   {head}
                 </Typography>
@@ -39,36 +31,36 @@ const BackVisitorList: React.FC = () => {
         </thead>
         <tbody>
           {receptions?.map((reception: Reception, index) => (
-            <tr key={reception.id} className={`cursor-pointer ${index % 2 === 0 ? 'even:bg-blue-gray-50/50' : ''}`}>
-              <td className="p-4">
-                <Typography variant="small" color="blue-gray" className="font-normal">
-                  {reception.companyName}
+            <tr key={reception.id} onClick={() => handleOpenAttendDialog(reception)} className={`cursor-pointer even:bg-gray-100 border-b hover:bg-gray-200`}>
+              <td className="p-5">
+                <Typography variant="small" color="blue-gray" className="font-normal text-lg">
+                  {reception.visitDateTime ? new Date(reception.visitDateTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : ''}
                 </Typography>
               </td>
-              <td className="p-4">
-                <Typography variant="small" color="blue-gray" className="font-normal">
-                  {reception.customerName}
-                </Typography>
-              </td>
-              <td className="p-4">
-                <Typography variant="small" color="blue-gray" className="font-normal">
+              <td className="p-5">
+                <Typography variant="small" color="blue-gray" className="font-normal text-lg">
                   {reception.assignedOffice || reception.customerAddress}
                 </Typography>
               </td>
-              <td className="p-4">
-                <Typography variant="small" color="blue-gray" className="font-normal">
+              <td className="p-5">
+                <Typography variant="small" color="blue-gray" className="font-normal text-lg">
                   {reception.caName}
                 </Typography>
               </td>
-              <td className="p-4">
-                <Typography variant="small" color="blue-gray" className="font-normal">
-                  {reception.guestPassNumber}
+              <td className="p-5">
+                <Typography variant="small" color="blue-gray" className="font-normal text-lg">
+                  {reception.companyName}
                 </Typography>
               </td>
-              <td className="p-4">
-                <Button variant="gradient" color="blue" onClick={() => handleOpenAttendDialog(reception)} disabled={!!reception.attendedCA} className="text-white text-sm bg-blue-500 hover:bg-blue-700 p-2">
-                  アテンド
-                </Button>
+              <td className="p-5">
+                <Typography variant="small" color="blue-gray" className="font-normal text-lg">
+                  {reception.customerName}
+                </Typography>
+              </td>
+              <td className="p-5">
+                <Typography variant="small" color="blue-gray" className="font-normal text-lg">
+                  {reception.guestPassNumber}
+                </Typography>
               </td>
             </tr>
           ))}
@@ -88,7 +80,7 @@ const BackVisitorList: React.FC = () => {
                   <Typography variant="h6" className="text-gray-700">
                     お客様氏名: {selectedReception.customerName}
                   </Typography>
-                  <label className="block text-gray-700">営業担当者名</label>
+                  <label className="block text-gray-700">対応者名</label>
                   <Input value={attendedCA} onChange={(e) => setAttendedCA(e.target.value)} className="border-black indent-3 h-10" />
                 </>
               )}

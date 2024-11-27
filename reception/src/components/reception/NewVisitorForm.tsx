@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Dialog, DialogHeader, DialogBody, DialogFooter, Button, Input, Typography } from '@material-tailwind/react';
+import { Dialog, DialogHeader, DialogBody, DialogFooter, Button, Input, Typography, Checkbox } from '@material-tailwind/react';
 
 interface NewVisitorFormProps {
   open: boolean;
@@ -12,23 +12,29 @@ const NewVisitorForm: React.FC<NewVisitorFormProps> = ({ open, onCloseFunction, 
   const [customerName, setCustomerName] = useState('');
   const [customerAddress, setCustomerAddress] = useState('');
   const [guestPassNumber, setGuestPassNumber] = useState('');
+  const [attended, setAttended] = useState(false);
+
   const [errorMessage, setErrorMessage] = useState('');
+
 
   const onClose = () => {
     setCompanyName('');
     setCustomerName('');
     setCustomerAddress('');
     setGuestPassNumber('');
+    setAttended(false);
     setErrorMessage('');
     onCloseFunction();
   }
 
   const handleSubmit = async () => {
+    const attendedCA = attended ? '未確認' : null;
     const newVisitor = {
       companyName,
       customerName,
       customerAddress,
       guestPassNumber,
+      attendedCA,
       visitDateTime: new Date().toISOString(),
     };
 
@@ -77,6 +83,12 @@ const NewVisitorForm: React.FC<NewVisitorFormProps> = ({ open, onCloseFunction, 
               <label className="block text-gray-700">ゲストパス</label>
               <Input value={guestPassNumber} onChange={(e) => setGuestPassNumber(e.target.value)} className="border-black indent-3 h-10" />
             </div>
+            <label className="flex items-center mt-4 cursor-pointer">
+              <Checkbox label="" checked={attended} onChange={(e) => setAttended(e.target.checked)} className="text-gray-700" />
+              <Typography variant="body1" className="ml-2 text-gray-700">
+                同行していますか？
+              </Typography>
+            </label>
           </div>
         </DialogBody>
         <DialogFooter className="flex justify-end space-x-2 mt-2 pb-0">

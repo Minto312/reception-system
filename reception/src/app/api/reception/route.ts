@@ -17,9 +17,11 @@ export async function PUT(request: Request) {
   try {
     const body = await request.json();
     const { id, ...updateData } = body;
+    delete updateData.is_attended;
+    delete updateData.is_responded;
 
     if (!id) {
-      return NextResponse.json({ error: 'ID is required' }, { status: 400 });
+      return NextResponse.json({ message: 'ID is required', ok: false }, { status: 400 });
     }
 
     const updatedReception = await prisma.reception.update({
@@ -27,10 +29,10 @@ export async function PUT(request: Request) {
       data: updateData,
     });
 
-    return NextResponse.json(updatedReception);
+    return NextResponse.json({...updatedReception, ok: true});
   } catch (error) {
     console.error(error);
-    return NextResponse.json({ error: 'Failed to update reception' }, { status: 500 });
+    return NextResponse.json({ message: 'Failed to update reception', ok: false }, { status: 500 });
   }
 }
 

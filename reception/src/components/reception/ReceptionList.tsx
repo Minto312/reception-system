@@ -7,22 +7,7 @@ import { Card, Typography, Input } from '@material-tailwind/react';
 import VisitRecordDialog from './VisitRecordDialog';
 import { useVisitRecordDialog } from '@/hooks/useVisitRecordDialog';
 
-const TABLE_HEAD = [
-  '企業名', 
-  'お客様名', 
-  'ゲストパス', 
-  '来場日時', 
-  'アテンド済',
-  '対応済',
-  '担当営業所', 
-  '担当CA名', 
-  '対応CA名', 
-  'お客様メールアドレス', 
-  'お客様住所', 
-  'お客様電話番号', 
-  'オフィス営業リストID', 
-  '通番'
-];
+const TABLE_HEAD = ['企業名', 'お客様名', 'お客様住所', 'ゲストパス', '来場日時', 'アテンド済', '対応済', '担当営業所', '担当CA名', '対応CA名', 'お客様メールアドレス', 'お客様電話番号', 'オフィス営業リストID', '通番'];
 
 export const ReceptionList: React.FC = () => {
   const { filteredReceptions, isLoading, error, searchTerm, handleSearchChange } = useFilteredReceptions();
@@ -40,7 +25,7 @@ export const ReceptionList: React.FC = () => {
         <thead>
           <tr>
             {TABLE_HEAD.map((head) => (
-              <th key={head} className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
+              <th key={head} className="border-b border-blue-gray-100 bg-blue-gray-50 p-4 bg-blue-50">
                 <Typography variant="small" color="blue-gray" className="font-normal leading-none opacity-70">
                   {head}
                 </Typography>
@@ -50,7 +35,7 @@ export const ReceptionList: React.FC = () => {
         </thead>
         <tbody>
           {filteredReceptions?.map((reception: Reception, index) => (
-            <tr key={reception.id} className={`cursor-pointer ${index % 2 === 0 ? 'even:bg-blue-gray-50/50' : ''}`} onClick={() => handleOpenDialog(reception)}>
+            <tr key={reception.id} className={`cursor-pointer even:bg-gray-100 border-b hover:bg-gray-200`} onClick={() => handleOpenDialog(reception)}>
               <td className="p-4">
                 <Typography variant="small" color="blue-gray" className="font-normal">
                   {reception.companyName}
@@ -59,6 +44,11 @@ export const ReceptionList: React.FC = () => {
               <td className="p-4">
                 <Typography variant="small" color="blue-gray" className="font-normal">
                   {reception.customerName}
+                </Typography>
+              </td>
+              <td className="p-4">
+                <Typography variant="small" color="blue-gray" className="font-normal">
+                  {reception.customerAddress}
                 </Typography>
               </td>
               <td className="p-4">
@@ -99,11 +89,6 @@ export const ReceptionList: React.FC = () => {
               <td className="p-4">
                 <Typography variant="small" color="blue-gray" className="font-normal">
                   {reception.customerEmail}
-                </Typography>
-              </td>
-              <td className="p-4">
-                <Typography variant="small" color="blue-gray" className="font-normal">
-                  {reception.customerAddress}
                 </Typography>
               </td>
               <td className="p-4">

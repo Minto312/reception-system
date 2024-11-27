@@ -13,7 +13,15 @@ export const useBackReceptions = () => {
       const filtered = receptions.filter(
         (reception) => reception.visitDateTime !== null && reception.attendedCA === null
       );
-      setFilteredReceptions(filtered);
+
+      const sorted = filtered.sort((a, b) => {
+        if (a.visitDateTime && b.visitDateTime) {
+          return new Date(a.visitDateTime).getTime() - new Date(b.visitDateTime).getTime();
+        }
+        return 0;
+      });
+
+      setFilteredReceptions(sorted);
     }
   }, [receptions]);
 
